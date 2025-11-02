@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Техподдержка Laser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background: #0056b3;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .faq-item {
+            margin-bottom: 10px;
+        }
+
+        .faq-question {
+            background: #eee;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .faq-answer {
+            padding: 10px;
+            display: none;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #0056b3;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Техническая поддержка Laser</h1>
+        <p>Создание сайтов и игр. Мы всегда готовы помочь!</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">О компании</a></li>
+            <li><a href="#support">Поддержка</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="about" class="section">
+            <h2>О компании Laser</h2>
+            <p>Laser — студия по созданию сайтов и игр. Мы помогаем бизнесу и частным лицам воплощать идеи в цифровую реальность. Наши специалисты работают с 2015 года и имеют опыт в разработке игр, лендингов, интернет-магазинов и веб-приложений.</p>
+        </section>
+
+        <section id="support" class="section">
+            <h2>Обращение в техподдержку</h2>
+            <form id="supportForm">
+                <label for="name">Ваше имя:</label>
+                <input type="text" id="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="project">Проект (если есть):</label>
+                <input type="text" id="project">
+
+                <label for="message">Сообщение:</label>
+                <textarea id="message" rows="5" required></textarea>
+
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+
+        <section id="faq" class="section">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-item">
+                <div class="faq-question">Сколько длится разработка сайта?</div>
+                <div class="faq-answer">В среднем от 2 до 6 недель в зависимости от сложности.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Можно ли заказать 2D игру?</div>
+                <div class="faq-answer">Да, мы разрабатываем как 2D, так и 3D игры под любые платформы.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Есть ли гарантия на выполненные работы?</div>
+                <div class="faq-answer">Да, мы предоставляем гарантию на все выполненные проекты.</div>
+            </div>
+        </section>
+
+        <section id="contacts" class="section">
+            <h2>Контакты</h2>
+            <p>Email: support@laser-studio.com</p>
+            <p>Telegram: <a href="https://t.me/laser_support" target="_blank">@laser_support</a></p>
+            <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Laser Studio. Все права защищены.</p>
+    </footer>
+
+    <script>
+        document.getElementById("supportForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            alert("Сообщение отправлено! Мы свяжемся с вами в ближайшее время.");
+            this.reset();
+        });
+
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+
+</body>
+</html>
