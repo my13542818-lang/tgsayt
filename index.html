@@ -105,7 +105,7 @@
             color: #2c3e50;
         }
 
-        form input, form textarea {
+        form input, form textarea, form select {
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
@@ -115,7 +115,7 @@
             transition: border-color 0.3s;
         }
 
-        form input:focus, form textarea:focus {
+        form input:focus, form textarea:focus, form select:focus {
             border-color: #007BFF;
             outline: none;
             box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
@@ -221,6 +221,7 @@
         <ul>
             <li><a href="#about">О компании</a></li>
             <li><a href="#support">Поддержка</a></li>
+            <li><a href="#payment">Оплата</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#faqitem">Наши игры</a></li>
             <li><a href="#contacts">Контакты</a></li>
@@ -265,6 +266,31 @@
                 <textarea id="message_complaint" rows="5" required></textarea>
 
                 <button type="submit">Отправить</button>
+            </form>
+        </section>
+
+        <!-- НОВАЯ СЕКЦИЯ ОПЛАТЫ -->
+        <section id="payment" class="section">
+            <h2>Оплатить заказ</h2>
+            <form id="paymentForm">
+                <label for="orderType">Тип заказа:</label>
+                <select id="orderType" required>
+                    <option value="Сайт-визитка">Сайт-визитка (10 000 ₽)</option>
+                    <option value="2D игра">2D игра (50 000 ₽)</option>
+                    <option value="3D игра">3D игра (100 000 ₽)</option>
+                    <option value="Мобильное приложение">Мобильное приложение (75 000 ₽)</option>
+                </select>
+
+                <label for="name_payment">Ваше имя:</label>
+                <input type="text" id="name_payment" required>
+
+                <label for="email_payment">Email:</label>
+                <input type="email" id="email_payment" required>
+
+                <label for="phone_payment">Телефон:</label>
+                <input type="tel" id="phone_payment" required>
+
+                <button type="submit">Отправить заказ и получить ссылку для оплаты</button>
             </form>
         </section>
 
@@ -316,12 +342,12 @@
 
     <script>
         // Универсальная функция для отправки сообщений в Telegram
-        async function sendToTelegram(message, formElement) {
+        async function sendToTelegram(message) {
             const botToken = '7962403584:AAFdnlc4hHsIslblbbcaCOiwkri60XSoP_4'; // ВАШ ТОКЕН
             const chatId = '-5017246001'; // ВАШ ЧАТ
 
             try {
-                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, { // УБРАН ПРОБЕЛ
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -336,14 +362,14 @@
                 const result = await response.json();
 
                 if (result.ok) {
-                    alert("Сообщение отправлено! Мы свяжемся с вами в ближайшее время.");
-                    formElement.reset();
+                    return true; // Успешно отправлено
                 } else {
-                    alert("Ошибка: " + result.description);
+                    console.error("Ошибка Telegram API:", result.description);
+                    return false;
                 }
             } catch (err) {
                 console.error("Ошибка сети:", err);
-                alert("Ошибка сети. Попробуйте позже.");
+                return false;
             }
         }
 
@@ -358,7 +384,13 @@
 
             const telegramMessage = `Новое обращение в техподдержку сайт основной :\n\nИмя: ${name}\nEmail: ${email}\nПроект: ${project || 'не указан'}\nСообщение: ${message}`;
 
-            await sendToTelegram(telegramMessage, this);
+            const success = await sendToTelegram(telegramMessage);
+            if (success) {
+                alert("Сообщение отправлено! Мы свяжемся с вами в ближайшее время.");
+                this.reset();
+            } else {
+                alert("Ошибка при отправке в Telegram. Попробуйте позже.");
+            }
         });
 
         // Обработчик формы жалоб
@@ -371,7 +403,46 @@
 
             const telegramMessage = `Новая жалоба:\n\nИмя: ${name}\nEmail: ${email}\nТекст жалобы: ${message}`;
 
-            await sendToTelegram(telegramMessage, this);
+            const success = await sendToTelegram(telegramMessage);
+            if (success) {
+                alert("Жалоба отправлена! Мы свяжемся с вами в ближайшее время.");
+                this.reset();
+            } else {
+                alert("Ошибка при отправке в Telegram. Попробуйте позже.");
+            }
+        });
+
+        // Обработчик формы оплаты
+        document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const orderType = document.getElementById("orderType").value;
+            const name = document.getElementById("name_payment").value;
+            const email = document.getElementById("email_payment").value;
+            const phone = document.getElementById("phone_payment").value;
+
+            // Определяем сумму в зависимости от типа заказа
+            const prices = {
+                "Сайт-визитка": "10000",
+                "2D игра": "50000",
+                "3D игра": "100000",
+                "Мобильное приложение": "75000"
+            };
+            const amount = prices[orderType];
+
+            // Сообщение в Telegram
+            const telegramMessage = `Новый заказ на оплату:\n\nТип: ${orderType}\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nСумма: ${amount} ₽`;
+
+            const success = await sendToTelegram(telegramMessage);
+            if (success) {
+                // Ссылка на оплату (пример для ЮMoney)
+                // ЗАМЕНИТЕ НОМЕР СЧЁТА (41001...) НА СВОЙ!
+                const paymentLink = `https://yoomoney.ru/transfer/money?to=410011234567890&amount=${amount}&message=${encodeURIComponent(orderType + ' - ' + name)}`;
+                alert("Заказ отправлен! Перейдите по ссылке для оплаты.");
+                window.open(paymentLink, '_blank');
+            } else {
+                alert("Ошибка при отправке в Telegram. Попробуйте позже.");
+            }
         });
 
         // Обработчики для FAQ
