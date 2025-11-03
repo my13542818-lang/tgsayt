@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакты - Laser Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        nav {
+            background: #2c3e50;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        .main-content {
+            padding: 40px 0;
+        }
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .contact-details p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .contact-details a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+        .map iframe {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            border: none;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Laser Studio</h1>
+            <p>Создание сайтов и игр. Мы всегда готовы помочь!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="support.html">Поддержка</a></li>
+                <li><a href="payment.html">Оплата</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="games.html">Наши игры</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="social.html">Соц. сети</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="section">
+                <h2>Контакты</h2>
+                <div class="contact-info">
+                    <div class="contact-details">
+                        <p>Email: <a href="mailto:teevich@mail.ru">teevich@mail.ru</a></p>
+                        <p>Telegram: <a href="https://t.me/botikyblodok_bot" target="_blank">@botikyblodok_bot</a></p>
+                        <p>Телефон: <a href="tel:+79531114942">+7 (953) 111-49-42</a></p>
+                    </div>
+                    <div class="map">
+                        <!-- Пример встраиваемой карты Google Maps (замените на ваш адрес) -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1998.1818200904837!2d30.31582631582009!3d59.934281899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x469630f7f0d5f0d5%3A0x1234567890abcdef!2z0KHQvtC70L7RgNCw0LTRgdGC0LLQsCwg0KDQtdGB0YHQuNGC0LXRgdGPLCAxMDAwMDA!5e0!3m2!1sru!2s!4v1234567890123!5m2!1sru!2s" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Laser Studio. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ - Laser Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        nav {
+            background: #2c3e50;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        .main-content {
+            padding: 40px 0;
+        }
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .faq-question {
+            background: #f8f9fa;
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #2c3e50;
+            transition: background 0.3s;
+        }
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        .faq-answer {
+            padding: 15px;
+            background: #fff;
+            display: none; /* Скрыто по умолчанию */
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        /* Стиль для раскрытия FAQ */
+        .faq-answer:target {
+            display: block;
+        }
+        /* Для простоты без JS - используем :target */
+        /* Добавим якоря к ответам */
+        .faq-answer {
+            display: none;
+        }
+        .faq-answer.active {
+            display: block;
+        }
+        /* Стиль для якоря */
+        .faq-answer:target {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Laser Studio</h1>
+            <p>Создание сайтов и игр. Мы всегда готовы помочь!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="support.html">Поддержка</a></li>
+                <li><a href="payment.html">Оплата</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="games.html">Наши игры</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="social.html">Соц. сети</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="section">
+                <h2>Часто задаваемые вопросы</h2>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer('answer1')">Сколько длится разработка сайта?</div>
+                    <div id="answer1" class="faq-answer">
+                        <p>В среднем от 2 до 6 недель в зависимости от сложности.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer('answer2')">Можно ли заказать 2D игру?</div>
+                    <div id="answer2" class="faq-answer">
+                        <p>Да, мы разрабатываем как 2D, так и 3D игры под любые платформы.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer('answer3')">Есть ли гарантия на выполненные работы?</div>
+                    <div id="answer3" class="faq-answer">
+                        <p>Да, мы предоставляем гарантию на все выполненные проекты.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Laser Studio. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnswer(answerId) {
+            const answer = document.getElementById(answerId);
+            answer.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

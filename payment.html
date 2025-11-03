@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата - Laser Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        nav {
+            background: #2c3e50;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        .main-content {
+            padding: 40px 0;
+        }
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        form input, form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        form button {
+            width: 100%;
+            padding: 14px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        form button:hover {
+            background: #219653;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        /* Стили для сообщения о статусе */
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: none; /* Скрыто по умолчанию */
+        }
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Laser Studio</h1>
+            <p>Создание сайтов и игр. Мы всегда готовы помочь!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="support.html">Поддержка</a></li>
+                <li><a href="payment.html">Оплата</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="games.html">Наши игры</a></li>
+                <li><a href="news.html">Новости</a></li>
+                <li><a href="social.html">Соц. сети</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="section">
+                <h2>Оплатить заказ</h2>
+                <form id="paymentForm">
+                    <label for="orderType">Тип заказа:</label>
+                    <select id="orderType" name="orderType" required>
+                        <option value="Сайт-визитка">Сайт-визитка (1 000 ₽)</option>
+                        <option value="2D игра">2D игра (50 ₽)</option>
+                        <option value="3D игра">3D игра (100 ₽)</option>
+                        <option value="Мобильное приложение">Мобильное приложение (750 ₽)</option>
+                    </select>
+
+                    <label for="name_payment">Ваше имя:</label>
+                    <input type="text" id="name_payment" name="name_payment" required>
+
+                    <label for="email_payment">Email:</label>
+                    <input type="email" id="email_payment" name="email_payment" required>
+
+                    <label for="phone_payment">Телефон:</label>
+                    <input type="tel" id="phone_payment" name="phone_payment" required>
+
+                    <button type="submit">Отправить заказ и получить ссылку для оплаты</button>
+                </form>
+                <div id="paymentStatus" class="status-message"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Laser Studio. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+            e.preventDefault(); // Останавливаем стандартную отправку формы
+
+            const orderType = document.getElementById("orderType").value;
+            const name = document.getElementById("name_payment").value.trim();
+            const email = document.getElementById("email_payment").value.trim();
+            const phone = document.getElementById("phone_payment").value.trim();
+
+            // Определяем сумму и ссылку для оплаты на основе типа заказа
+            // Используем проверенные ссылки из базы знаний
+            let amount, paymentLink;
+            switch(orderType) {
+                case "Сайт-визитка":
+                    amount = "1000";
+                    paymentLink = "https://yoomoney.ru/to/4100119320974854";
+                    break;
+                case "2D игра":
+                    amount = "50";
+                    paymentLink = "https://yoomoney.ru/fundraise/1DQ1OAC8EIP.251103";
+                    break;
+                case "3D игра":
+                    amount = "100";
+                    paymentLink = "https://yoomoney.ru/to/4100119320974854";
+                    break;
+                case "Мобильное приложение":
+                    amount = "750";
+                    paymentLink = "https://yoomoney.ru/fundraise/1DQ1R2VA84M.251103";
+                    break;
+                default:
+                    alert("Неизвестный тип заказа.");
+                    return;
+            }
+
+            // Формируем сообщение для Telegram
+            const telegramMessage = `Новый заказ на оплату:\n\nТип: ${orderType}\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nСумма: ${amount} ₽`;
+
+            // Отправляем сообщение в Telegram
+            const botToken = '7962403584:AAFdnlc4hHsIslblbbcaCOiwkri60XSoP_4'; // ВАЖНО: Не безопасно для продакшена
+            const chatId = '-5017246001'; // ВАЖНО: Не безопасно для продакшена
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            const statusDiv = document.getElementById('paymentStatus');
+
+            try {
+                const response = await fetch(telegramUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: telegramMessage,
+                        parse_mode: 'HTML' // Для форматирования, если нужно
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.ok) {
+                    statusDiv.textContent = 'Заказ отправлен! Перейдите по ссылке для оплаты.';
+                    statusDiv.className = 'status-message status-success';
+                    // Открываем ссылку для оплаты в новой вкладке
+                    window.open(paymentLink, '_blank');
+                } else {
+                    console.error("Ошибка Telegram API:", result);
+                    statusDiv.textContent = `Ошибка Telegram API: ${result.description}`;
+                    statusDiv.className = 'status-message status-error';
+                }
+            } catch (error) {
+                console.error("Ошибка сети:", error);
+                statusDiv.textContent = 'Ошибка сети при отправке заказа. Пожалуйста, попробуйте позже.';
+                statusDiv.className = 'status-message status-error';
+            } finally {
+                statusDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
