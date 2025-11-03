@@ -275,10 +275,10 @@
             <form id="paymentForm">
                 <label for="orderType">Тип заказа:</label>
                 <select id="orderType" required>
-                    <option value="Сайт-визитка">Сайт-визитка (1000 ₽)</option>
-                    <option value="2D игра">2D игра (50 ₽)</option>
-                    <option value="3D игра">3D игра (100  ₽)</option>
-                    <option value="Мобильное приложение">Мобильное приложение (750 ₽)</option>
+                    <option value="Сайт-визитка">Сайт-визитка (1000₽)</option>
+                    <option value="2D игра">2D игра (50₽)</option>
+                    <option value="3D игра">3D игра (100₽)</option>
+                    <option value="Мобильное приложение">Мобильное приложение (750₽)</option>
                 </select>
 
                 <label for="name_payment">Ваше имя:</label>
@@ -313,15 +313,15 @@
         <section id="faqitem" class="section">
             <h2>Наши игры</h2>
             <div class="faqitem-item">
-                <div class="faqitem-question">1. Выпущенная: </div>
+                <div class="faqitem-question">1. Выпущенная: BloggerLifeinClicks — жизнь блогера в кликах</div>
                 <div class="faqitem-answer">BloggerLifeinClicks — жизнь блогера в кликах</div>
             </div>
             <div class="faqitem-item">
-                <div class="faqitem-question">2. Невыпущенная: </div>
+                <div class="faqitem-question">2. Невыпущенная: Сварщик в кликах</div>
                 <div class="faqitem-answer">Сварщик в кликах</div>
             </div>
             <div class="faqitem-item">
-                <div class="faqitem-question">3. Невыпущенная: </div>
+                <div class="faqitem-question">3. Невыпущенная: Доктор в кликах</div>
                 <div class="faqitem-answer">Доктор в кликах</div>
             </div>
         </section>
@@ -421,25 +421,40 @@
             const email = document.getElementById("email_payment").value;
             const phone = document.getElementById("phone_payment").value;
 
-            // Определяем сумму в зависимости от типа заказа
-            const prices = {
-                "Сайт-визитка": "1000",
-                "2D игра": "50",
-                "3D игра": "100",
-                "Мобильное приложение": "750"
+            // Объект с ценами и ссылками для оплаты
+            const paymentOptions = {
+                "Сайт-визитка": {
+                    amount: "1000",
+                    link: "https://yoomoney.ru/fundraise/1DQ1RDFG78R.251103" + encodeURIComponent("Заказ сайта-визитки - " + name)
+                },
+                "2D игра": {
+                    amount: "50",
+                    link: "https://yoomoney.ru/fundraise/1DQ1OAC8EIP.251103" + encodeURIComponent("Заказ 2D игры - " + name)
+                },
+                "3D игра": {
+                    amount: "100",
+                    link: "https://yoomoney.ru/fundraise/1DQ1QLQ2AA8.251103" + encodeURIComponent("Заказ 3D игры - " + name)
+                },
+                "Мобильное приложение": {
+                    amount: "750",
+                    link: "https://yoomoney.ru/fundraise/1DQ1R2VA84M.251103" + encodeURIComponent("Заказ мобильного приложения - " + name)
+                }
             };
-            const amount = prices[orderType];
+
+            const selectedOption = paymentOptions[orderType];
+            if (!selectedOption) {
+                alert("Ошибка: Неизвестный тип заказа.");
+                return;
+            }
 
             // Сообщение в Telegram
-            const telegramMessage = `Новый заказ на оплату:\n\nТип: ${orderType}\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nСумма: ${amount} ₽`;
+            const telegramMessage = `Новый заказ на оплату:\n\nТип: ${orderType}\nИмя: ${name}\nEmail: ${email}\nТелефон: ${phone}\nСумма: ${selectedOption.amount} ₽`;
 
             const success = await sendToTelegram(telegramMessage);
             if (success) {
-                // Ссылка на оплату (пример для ЮMoney)
-                // ЗАМЕНИТЕ НОМЕР СЧЁТА (41001...) НА СВОЙ!
-                const paymentLink = `https://yoomoney.ru/transfer/money?to=4100119320974854&amount=${amount}&message=${encodeURIComponent(orderType + ' - ' + name)}`;
+                // Открываем уникальную ссылку для оплаты
                 alert("Заказ отправлен! Перейдите по ссылке для оплаты.");
-                window.open(paymentLink, '_blank');
+                window.open(selectedOption.link, '_blank');
             } else {
                 alert("Ошибка при отправке в Telegram. Попробуйте позже.");
             }
