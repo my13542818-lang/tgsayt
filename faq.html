@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Laser Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Laser Studio</h1>
+            <p>Создание сайтов и игр. Мы всегда готовы помочь!</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О компании</a></li>
+            <li><a href="support.html">Поддержка</a></li>
+            <li><a href="payment.html">Оплата</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="games.html">Наши игры</a></li>
+            <li><a href="news.html">Новости</a></li>
+            <li><a href="social.html">Соц. сети</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-item">
+                <div class="faq-question">Сколько длится разработка сайта?</div>
+                <div class="faq-answer">В среднем от 2 до 6 недель в зависимости от сложности.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Можно ли заказать 2D игру?</div>
+                <div class="faq-answer">Да, мы разрабатываем как 2D, так и 3D игры под любые платформы.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Есть ли гарантия на выполненные работы?</div>
+                <div class="faq-answer">Да, мы предоставляем гарантию на все выполненные проекты.</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Laser Studio. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>

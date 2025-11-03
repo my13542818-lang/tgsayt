@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата - Laser Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Laser Studio</h1>
+            <p>Создание сайтов и игр. Мы всегда готовы помочь!</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О компании</a></li>
+            <li><a href="support.html">Поддержка</a></li>
+            <li><a href="payment.html">Оплата</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="games.html">Наши игры</a></li>
+            <li><a href="news.html">Новости</a></li>
+            <li><a href="social.html">Соц. сети</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Оплатить заказ</h2>
+            <form id="paymentForm">
+                <label for="orderType">Тип заказа:</label>
+                <select id="orderType" required>
+                    <option value="Сайт-визитка">Сайт-визитка (1 000 ₽)</option>
+                    <option value="2D игра">2D игра (50 ₽)</option>
+                    <option value="3D игра">3D игра (100 ₽)</option>
+                    <option value="Мобильное приложение">Мобильное приложение (750 ₽)</option>
+                </select>
+
+                <label for="name_payment">Ваше имя:</label>
+                <input type="text" id="name_payment" required>
+
+                <label for="email_payment">Email:</label>
+                <input type="email" id="email_payment" required>
+
+                <label for="phone_payment">Телефон:</label>
+                <input type="tel" id="phone_payment" required>
+
+                <button type="submit">Отправить заказ и получить ссылку для оплаты</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Laser Studio. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
