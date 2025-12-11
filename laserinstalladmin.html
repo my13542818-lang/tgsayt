@@ -215,6 +215,8 @@
     </footer>
 
     <script type="module">
+        console.log("Загружается админ-панель..."); // Лог для отладки
+
         // --- Firebase Setup ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
@@ -232,18 +234,43 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        console.log("Firebase инициализирован."); // Лог для отладки
+
         // --- Данные ---
         function loadData() {
-            return JSON.parse(localStorage.getItem('laserInstallData'));
+            console.log("Загружаем данные из localStorage..."); // Лог для отладки
+            const data = JSON.parse(localStorage.getItem('laserInstallData'));
+            if (!data) {
+                console.warn("Данные в localStorage не найдены, инициализируем с нуля.");
+                const initialData = {
+                    categories: [
+                        { id: 'office', name: 'Офисные программы' },
+                        { id: 'lowpc', name: 'Игры для слабых ПК' },
+                        { id: 'dev', name: 'Программы для разработки' }
+                    ],
+                    items: [
+                        { id: '1', name: 'LibreOffice', description: 'Бесплатный офисный пакет', downloadUrl: '#', category: 'office' },
+                        { id: '2', name: 'GIMP', description: 'Бесплатный редактор изображений', downloadUrl: '#', category: 'office' },
+                        { id: '3', name: 'Minecraft', description: 'Популярная игра с блоками', downloadUrl: '#', category: 'lowpc' },
+                        { id: '4', name: 'Notepad++', description: 'Текстовый редактор для разработчиков', downloadUrl: '#', category: 'dev' }
+                    ]
+                };
+                saveData(initialData);
+                return initialData;
+            }
+            console.log("Данные загружены:", data); // Лог для отладки
+            return data;
         }
 
         function saveData(data) {
+            console.log("Сохраняем данные в localStorage:", data); // Лог для отладки
             localStorage.setItem('laserInstallData', JSON.stringify(data));
             renderLists(); // Обновляем отображение после сохранения
         }
 
         // --- UI Helper Functions ---
         function renderLists() {
+            console.log("Рендерим списки..."); // Лог для отладки
             const data = loadData();
 
             // Рендер списка категорий
@@ -286,13 +313,18 @@
                 `;
                 itemListEl.appendChild(div);
             });
+            console.log("Списки отрендерены."); // Лог для отладки
         }
 
         // --- Логика ---
         function addCategory() {
+            console.log("Добавляем категорию..."); // Лог для отладки
             const nameInput = document.getElementById('new-category-name');
             const name = nameInput.value.trim();
-            if (!name) return;
+            if (!name) {
+                alert('Пожалуйста, введите название категории.');
+                return;
+            }
 
             const data = loadData();
             const newId = 'cat_' + Date.now(); // Простой ID
@@ -302,6 +334,7 @@
         }
 
         function deleteCategory(id) {
+            console.log("Удаляем категорию:", id); // Лог для отладки
             if (!confirm('Удалить категорию и все связанные с ней программы/игры?')) return;
 
             const data = loadData();
@@ -313,6 +346,7 @@
         }
 
         function addItem() {
+            console.log("Добавляем элемент..."); // Лог для отладки
             const nameInput = document.getElementById('new-item-name');
             const descInput = document.getElementById('new-item-description');
             const urlInput = document.getElementById('new-item-url');
@@ -340,6 +374,7 @@
         }
 
         function deleteItem(id) {
+            console.log("Удаляем элемент:", id); // Лог для отладки
             if (!confirm('Удалить программу/игру?')) return;
 
             const data = loadData();
@@ -348,24 +383,29 @@
         }
 
         function editItem(id) {
+            console.log("Редактирование элемента:", id); // Лог для отладки
             alert('Редактирование элемента "' + id + '" не реализовано в этом примере. Реализуйте самостоятельно, добавив поля редактирования.');
             // В реальном приложении здесь открывается форма с текущими данными элемента
         }
 
         // --- Обработчики событий ---
         document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM загружен, инициализируем админ-панель..."); // Лог для отладки
             renderLists(); // Инициализируем список при загрузке
 
             // Проверяем статус авторизации
+            console.log("Проверяем статус авторизации через Firebase..."); // Лог для отладки
             onAuthStateChanged(auth, (user) => {
+              console.log("Состояние аутентификации изменено:", user); // Лог для отладки
               if (user) {
-                console.log("Пользователь вошёл:", user);
+                console.log("Пользователь вошёл:", user.email);
                 // Проверяем, является ли пользователь администратором
                 if (user.email !== 'teevich@mail.ru') {
-                    console.log("Доступ запрещен. Перенаправление...");
+                    console.log("Доступ запрещен. Пользователь не администратор. Перенаправление...");
                     window.location.href = '/auth.html'; // Если не админ, кидаем на auth
                     return;
                 }
+                console.log("Доступ разрешен. Пользователь администратор.");
                 const authStatusDiv = document.getElementById('auth-status');
                 authStatusDiv.innerHTML = `
                     <span>Привет, ${user.email || user.phoneNumber || 'Администратор'}!</span>
@@ -380,14 +420,24 @@
 
         // Функция выхода
         window.logout = function() {
+             console.log("Выход из системы..."); // Лог для отладки
              signOut(auth).then(() => {
-                 console.log("Выход выполнен");
+                 console.log("Выход выполнен успешно");
                  window.location.href = '/auth.html';
              }).catch((error) => {
                  console.error("Ошибка выхода:", error);
                  alert("Ошибка при выходе: " + error.message);
              });
         };
+
+        // --- СДЕЛАТЬ ФУНКЦИИ ГЛОБАЛЬНЫМИ ---
+        window.addCategory = addCategory;
+        window.deleteCategory = deleteCategory;
+        window.addItem = addItem;
+        window.deleteItem = deleteItem;
+        window.editItem = editItem;
+
+        console.log("Скрипт админ-панели загружен."); // Лог для отладки
     </script>
 </body>
 </html>
