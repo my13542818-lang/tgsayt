@@ -224,7 +224,7 @@
           } else {
             // Пользователь НЕ авторизован, перенаправляем на страницу входа
             console.log("Пользователь не вошёл, перенаправление...");
-            window.location.href = 'tgsayt/auth.html';
+            window.location.href = 'auth.html';
           }
         });
 
@@ -232,7 +232,7 @@
         window.logout = function() {
              signOut(auth).then(() => {
                  console.log("Выход выполнен");
-                 window.location.href = 'tgsayt/auth.html';
+                 window.location.href = 'auth.html';
              }).catch((error) => {
                  console.error("Ошибка выхода:", error);
                  alert("Ошибка при выходе: " + error.message);
