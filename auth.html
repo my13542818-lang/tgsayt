@@ -458,7 +458,7 @@
                   const userCredential = await signInWithEmailAndPassword(auth, email, password);
                   console.log("Вход выполнен:", userCredential.user);
                   showMessage("Успешный вход! Перенаправление...", false);
-                  window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
+                  window.location.href = 'https://my13542818-lang.github.io/tgsayt/index.html'; // <--- ИЗМЕНЕНО НА ВАШ АДРЕС
                 } catch (error) {
                   console.error("Ошибка входа:", error);
                   showMessage(translateError(error), true);
@@ -491,7 +491,7 @@
                   const user = result.user;
                   console.log("Вход через Google выполнен:", user);
                   showMessage("Вход через Google успешен!", false);
-                  window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
+                  window.location.href = 'https://my13542818-lang.github.io/tgsayt/index.html'; // <--- ИЗМЕНЕНО НА ВАШ АДРЕС
                 } catch (error) {
                   console.error("Ошибка входа через Google:", error);
                   showMessage(translateError(error), true);
@@ -565,7 +565,7 @@
                 // Пока пропускаем проверку и отправляем ссылку
                 try {
                   await sendSignInLinkToEmail(auth, email, {
-                    url: window.location.href,
+                    url: 'https://my13542818-lang.github.io/tgsayt/index.html', // <--- ИЗМЕНЕНО: URL для magic link
                     handleCodeInApp: true
                   });
                   localStorage.setItem('emailForSignIn', email);
@@ -641,7 +641,7 @@
               const result = await confirmationResult.confirm(code);
               console.log("Вход по телефону выполнен:", result.user);
               showMessage("Успешный вход по телефону!", false);
-              window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
+              window.location.href = 'https://my13542818-lang.github.io/tgsayt/index.html'; // <--- ИЗМЕНЕНО НА ВАШ АДРЕС
             } catch (error) {
               console.error("Ошибка подтверждения кода:", error);
               showMessage(translateError(error), true);
@@ -661,7 +661,7 @@
           const result = await signInWithEmailLink(auth, email, window.location.href);
           localStorage.removeItem('emailForSignIn');
           showMessage("Успешный вход по ссылке! Перенаправление...", false);
-          window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
+          window.location.href = 'https://my13542818-lang.github.io/tgsayt/index.html'; // <--- ИЗМЕНЕНО НА ВАШ АДРЕС
         } catch (error) {
           console.error("Ошибка входа по magic link:", error);
           showMessage(translateError(error), true);
