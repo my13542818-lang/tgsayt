@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Laser Studio - Вход / Регистрация</title>
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/2333/2333464.png">
-  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e"></script>
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/2333/2333464.png  ">
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e  "></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -259,9 +259,9 @@
 
   <script type="module">
     // --- Firebase Setup ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js  ";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-analytics.js  ";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js  ";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAC77MgnqA0LGykek0ffVQnXu3rqadDzzo",
@@ -458,7 +458,7 @@
                   const userCredential = await signInWithEmailAndPassword(auth, email, password);
                   console.log("Вход выполнен:", userCredential.user);
                   showMessage("Успешный вход! Перенаправление...", false);
-                  window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+                  window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
                 } catch (error) {
                   console.error("Ошибка входа:", error);
                   showMessage(translateError(error), true);
@@ -491,7 +491,7 @@
                   const user = result.user;
                   console.log("Вход через Google выполнен:", user);
                   showMessage("Вход через Google успешен!", false);
-                  window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+                  window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
                 } catch (error) {
                   console.error("Ошибка входа через Google:", error);
                   showMessage(translateError(error), true);
@@ -641,7 +641,7 @@
               const result = await confirmationResult.confirm(code);
               console.log("Вход по телефону выполнен:", result.user);
               showMessage("Успешный вход по телефону!", false);
-              window.location.href = '/';
+              window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
             } catch (error) {
               console.error("Ошибка подтверждения кода:", error);
               showMessage(translateError(error), true);
@@ -661,7 +661,7 @@
           const result = await signInWithEmailLink(auth, email, window.location.href);
           localStorage.removeItem('emailForSignIn');
           showMessage("Успешный вход по ссылке! Перенаправление...", false);
-          window.location.href = '/';
+          window.location.href = '/index.html'; // <--- ИЗМЕНЕНО НА ПРЯМОЙ ПЕРЕХОД
         } catch (error) {
           console.error("Ошибка входа по magic link:", error);
           showMessage(translateError(error), true);
