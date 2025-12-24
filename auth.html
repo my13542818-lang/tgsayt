@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Laser Studio - Вход / Регистрация</title>
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/2333/2333464.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/2333/2333464.png  ">
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -258,9 +259,9 @@
 
   <script type="module">
     // --- Firebase Setup ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js  ";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js  ";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js  ";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAC77MgnqA0LGykek0ffVQnXu3rqadDzzo",
@@ -407,16 +408,29 @@
                 return;
             }
 
+            // Вызов reCAPTCHA для регистрации
             try {
-              const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-              console.log("Пользователь зарегистрирован:", userCredential.user);
-              showMessage("Успешно зарегистрирован! Теперь войдите.", false);
-              showForm('signin');
+              grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e', {action: 'REGISTER'});
+                
+                // Здесь можно отправить токен на сервер для проверки
+                // Пока пропускаем проверку и регистрируем пользователя
+                try {
+                  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                  console.log("Пользователь зарегистрирован:", userCredential.user);
+                  showMessage("Успешно зарегистрирован! Теперь войдите.", false);
+                  showForm('signin');
+                } catch (error) {
+                  console.error("Ошибка регистрации:", error);
+                  showMessage(translateError(error), true);
+                } finally {
+                    enableButton();
+                }
+              });
             } catch (error) {
-              console.error("Ошибка регистрации:", error);
-              showMessage(translateError(error), true);
-            } finally {
-                enableButton();
+              console.error("Ошибка reCAPTCHA:", error);
+              showMessage("Ошибка проверки безопасности. Пожалуйста, попробуйте позже.", true);
+              enableButton();
             }
         });
 
@@ -433,16 +447,29 @@
                 return;
             }
 
+            // Вызов reCAPTCHA для входа
             try {
-              const userCredential = await signInWithEmailAndPassword(auth, email, password);
-              console.log("Вход выполнен:", userCredential.user);
-              showMessage("Успешный вход! Перенаправление...", false);
-              window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+              grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e', {action: 'LOGIN'});
+                
+                // Здесь можно отправить токен на сервер для проверки
+                // Пока пропускаем проверку и выполняем вход
+                try {
+                  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                  console.log("Вход выполнен:", userCredential.user);
+                  showMessage("Успешный вход! Перенаправление...", false);
+                  window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+                } catch (error) {
+                  console.error("Ошибка входа:", error);
+                  showMessage(translateError(error), true);
+                } finally {
+                    enableButton();
+                }
+              });
             } catch (error) {
-              console.error("Ошибка входа:", error);
-              showMessage(translateError(error), true);
-            } finally {
-                enableButton();
+              console.error("Ошибка reCAPTCHA:", error);
+              showMessage("Ошибка проверки безопасности. Пожалуйста, попробуйте позже.", true);
+              enableButton();
             }
         });
 
@@ -451,17 +478,31 @@
             const btn = event.target;
             disableButton(btn);
             const provider = new GoogleAuthProvider();
+            
+            // Вызов reCAPTCHA для Google входа
             try {
-              const result = await signInWithPopup(auth, provider);
-              const user = result.user;
-              console.log("Вход через Google выполнен:", user);
-              showMessage("Вход через Google успешен!", false);
-              window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+              grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e', {action: 'GOOGLE_LOGIN'});
+                
+                // Здесь можно отправить токен на сервер для проверки
+                // Пока пропускаем проверку и выполняем вход через Google
+                try {
+                  const result = await signInWithPopup(auth, provider);
+                  const user = result.user;
+                  console.log("Вход через Google выполнен:", user);
+                  showMessage("Вход через Google успешен!", false);
+                  window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+                } catch (error) {
+                  console.error("Ошибка входа через Google:", error);
+                  showMessage(translateError(error), true);
+                } finally {
+                    enableButton();
+                }
+              });
             } catch (error) {
-              console.error("Ошибка входа через Google:", error);
-              showMessage(translateError(error), true);
-            } finally {
-                enableButton();
+              console.error("Ошибка reCAPTCHA:", error);
+              showMessage("Ошибка проверки безопасности. Пожалуйста, попробуйте позже.", true);
+              enableButton();
             }
         });
 
@@ -477,15 +518,28 @@
                 return;
             }
 
+            // Вызов reCAPTCHA для восстановления пароля
             try {
-              await sendPasswordResetEmail(auth, email);
-              showMessage("Ссылка для восстановления отправлена на " + email, false);
-              setTimeout(() => showForm('signin'), 3000);
+              grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e', {action: 'PASSWORD_RESET'});
+                
+                // Здесь можно отправить токен на сервер для проверки
+                // Пока пропускаем проверку и отправляем письмо
+                try {
+                  await sendPasswordResetEmail(auth, email);
+                  showMessage("Ссылка для восстановления отправлена на " + email, false);
+                  setTimeout(() => showForm('signin'), 3000);
+                } catch (error) {
+                  console.error("Ошибка восстановления пароля:", error);
+                  showMessage(translateError(error), true);
+                } finally {
+                    enableButton();
+                }
+              });
             } catch (error) {
-              console.error("Ошибка восстановления пароля:", error);
-              showMessage(translateError(error), true);
-            } finally {
-                enableButton();
+              console.error("Ошибка reCAPTCHA:", error);
+              showMessage("Ошибка проверки безопасности. Пожалуйста, попробуйте позже.", true);
+              enableButton();
             }
         });
 
@@ -502,53 +556,53 @@
                  return;
             }
 
-            const actionCodeSettings = {
-                url: `${window.location.origin}${window.location.pathname}`,
-                handleCodeInApp: true,
-            };
-
+            // Вызов reCAPTCHA для отправки magic link
             try {
-                await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-                window.localStorage.setItem('emailForSignIn', email);
-                showMessage("Ссылка для входа отправлена на " + email + ". Проверьте почту!", false);
-                setTimeout(() => showForm('signin'), 3000);
+              grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6LeI-jQsAAAAAJGW7crd5rWHl57GwH6-byr1c10e', {action: 'MAGIC_LINK'});
+                
+                // Здесь можно отправить токен на сервер для проверки
+                // Пока пропускаем проверку и отправляем ссылку
+                try {
+                  await sendSignInLinkToEmail(auth, email, {
+                    url: window.location.href,
+                    handleCodeInApp: true
+                  });
+                  localStorage.setItem('emailForSignIn', email);
+                  showMessage("Ссылка для входа отправлена на " + email, false);
+                  setTimeout(() => showForm('signin'), 3000);
+                } catch (error) {
+                  console.error("Ошибка отправки magic link:", error);
+                  showMessage(translateError(error), true);
+                } finally {
+                    enableButton();
+                }
+              });
             } catch (error) {
-                console.error("Ошибка отправки ссылки:", error);
-                 showMessage(translateError(error), true);
-            } finally {
-                enableButton();
+              console.error("Ошибка reCAPTCHA:", error);
+              showMessage("Ошибка проверки безопасности. Пожалуйста, попробуйте позже.", true);
+              enableButton();
             }
         });
 
-        // --- ТЕЛЕФОННАЯ АУТЕНТИФИКАЦИЯ ---
-        // Инициализация reCAPTCHA verifier
-        function initializeRecaptcha() {
-            // Уничтожаем предыдущий верификатор, если он существует
-            if (recaptchaVerifier) {
-                recaptchaVerifier.clear();
-            }
-            // Создаём новый верификатор, передавая сам DOM-элемент
-            recaptchaVerifier = new RecaptchaVerifier(auth, document.getElementById('recaptcha-container'), { // <-- ИСПРАВЛЕНО
-                'size': 'normal', // 'invisible' или 'normal'
-                'callback': (response) => {
-                    console.log('reCAPTCHA решена');
-                    // Скрыть сообщение об ошибке reCAPTCHA, если было
-                    hideMessage();
-                },
-                'expired-callback': () => {
-                    console.log('Срок действия reCAPTCHA истёк');
-                    showMessage('Срок действия reCAPTCHA истёк. Пожалуйста, пройдите проверку снова.', true);
-                    // Очистить результат подтверждения
-                    confirmationResult = null;
-                }
-            });
-        }
-
-        // Отправка кода подтверждения
+        // Инициализация reCAPTCHA для формы телефона
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+          'size': 'normal',
+          'callback': (response) => {
+            // reCAPTCHA решена, теперь можно отправить SMS
+            console.log('reCAPTCHA решена');
+          },
+          'expired-callback': () => {
+            // reCAPTCHA истекла
+            console.log('reCAPTCHA истекла');
+          }
+        });
+        
+        // Отправка кода подтверждения по телефону
         document.getElementById('send-verification-code-btn').addEventListener('click', async () => {
             const btn = event.target;
             disableButton(btn);
-            const phoneNumber = document.getElementById('phone-number').value.trim();
+            const phoneNumber = document.getElementById('phone-number').value;
 
             if (!phoneNumber) {
                 showMessage("Пожалуйста, введите номер телефона.", true);
@@ -556,108 +610,64 @@
                 return;
             }
 
-            // Проверяем формат номера (простая проверка, можно улучшить)
-            if (!/^\+?\d{10,15}$/.test(phoneNumber.replace(/\s/g, ''))) {
-                showMessage("Пожалуйста, введите корректный номер телефона (например, +79991234567).", true);
-                enableButton();
-                return;
-            }
-
-            // Убедимся, что номер начинается с +
-            let formattedPhoneNumber = phoneNumber;
-            if (!formattedPhoneNumber.startsWith('+')) {
-                formattedPhoneNumber = '+' + formattedPhoneNumber;
-            }
-
             try {
-                // Инициализируем reCAPTCHA перед вызовом signInWithPhoneNumber
-                initializeRecaptcha();
-
-                const result = await signInWithPhoneNumber(auth, formattedPhoneNumber, recaptchaVerifier);
-                console.log("SMS отправлено. Подтверждение:", result);
-                confirmationResult = result; // Сохраняем результат
-
-                // Показываем поля для ввода кода
-                document.getElementById('verification-code-group').classList.remove('hidden');
-                document.getElementById('verify-code-btn').classList.remove('hidden');
-
-                showMessage("Код подтверждения отправлен на " + formattedPhoneNumber, false);
-
+              const appVerifier = window.recaptchaVerifier;
+              confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+              console.log("Код отправлен на телефон:", phoneNumber);
+              document.getElementById('verification-code-group').classList.remove('hidden');
+              document.getElementById('verify-code-btn').classList.remove('hidden');
+              showMessage("Код отправлен на телефон. Пожалуйста, проверьте SMS.", false);
             } catch (error) {
-                console.error("Ошибка отправки SMS:", error);
-                showMessage(translateError(error), true);
-                // Сбросить reCAPTCHA в случае ошибки
-                if (recaptchaVerifier) {
-                    recaptchaVerifier.render().then(function(widgetId) {
-                        grecaptcha.reset(widgetId);
-                    });
-                }
+              console.error("Ошибка отправки SMS:", error);
+              showMessage(translateError(error), true);
             } finally {
                 enableButton();
             }
         });
 
-        // Подтверждение кода
+        // Подтверждение кода из SMS
         document.getElementById('verify-code-btn').addEventListener('click', async () => {
             const btn = event.target;
             disableButton(btn);
-            const code = document.getElementById('verification-code').value.trim();
+            const code = document.getElementById('verification-code').value;
 
             if (!code) {
-                showMessage("Пожалуйста, введите код подтверждения.", true);
-                enableButton();
-                return;
-            }
-
-            if (!confirmationResult) {
-                showMessage("Сначала запросите код подтверждения.", true);
+                showMessage("Пожалуйста, введите код из SMS.", true);
                 enableButton();
                 return;
             }
 
             try {
-                const result = await confirmationResult.confirm(code);
-                const user = result.user;
-                console.log("Вход по телефону успешен:", user);
-                showMessage("Вход по телефону успешен!", false);
-                window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
+              const result = await confirmationResult.confirm(code);
+              console.log("Вход по телефону выполнен:", result.user);
+              showMessage("Успешный вход по телефону!", false);
+              window.location.href = '/';
             } catch (error) {
-                console.error("Ошибка подтверждения кода:", error);
-                showMessage(translateError(error), true);
+              console.error("Ошибка подтверждения кода:", error);
+              showMessage(translateError(error), true);
             } finally {
                 enableButton();
             }
         });
+    });
 
-        // --- Проверка входа по ссылке ---
-        function checkForSignInLink() {
-            if (isSignInWithEmailLink(auth, window.location.href)) {
-                let email = window.localStorage.getItem('emailForSignIn');
-                if (!email) {
-                    email = window.prompt('Пожалуйста, введите ваш email для подтверждения:');
-                }
-                if (!email) {
-                     showMessage("Не удалось получить email для подтверждения.", true);
-                     return;
-                }
-
-                signInWithEmailLink(auth, email, window.location.href)
-                    .then((result) => {
-                        console.log("Вход по ссылке успешен:", result.user);
-                        window.localStorage.removeItem('emailForSignIn');
-                        showMessage("Вход по ссылке успешен!", false);
-                        window.location.href = '/'; // <--- РАСКОММЕНТИРОВАНО
-                    })
-                    .catch((error) => {
-                        console.error("Ошибка входа по ссылке:", error);
-                        showMessage(translateError(error), true);
-                    });
-            }
+    // Проверка, является ли пользователь уже вошедшим по magic link
+    window.addEventListener('load', async () => {
+      const auth = getAuth();
+      const email = localStorage.getItem('emailForSignIn');
+      
+      if (email && isSignInWithEmailLink(auth, window.location.href)) {
+        try {
+          const result = await signInWithEmailLink(auth, email, window.location.href);
+          localStorage.removeItem('emailForSignIn');
+          showMessage("Успешный вход по ссылке! Перенаправление...", false);
+          window.location.href = '/';
+        } catch (error) {
+          console.error("Ошибка входа по magic link:", error);
+          showMessage(translateError(error), true);
         }
-
-        checkForSignInLink();
-    }); // END DOMContentLoaded
-
+      }
+    });
   </script>
 </body>
 </html>
