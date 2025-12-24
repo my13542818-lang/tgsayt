@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Laser Studio - Главная</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/2333/2333464.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/2333/2333464.png  ">
     <style>
         * {
             margin: 0;
@@ -65,7 +65,7 @@
             text-align: center;
             padding: 80px 20px;
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                        url('https://avatars.mds.yandex.net/i?id=5b891a13b5d57ab337065d02dd6b13a83eed179d-5614297-images-thumbs&n=13') no-repeat center center/cover;
+                        url('https://avatars.mds.yandex.net/i?id=5b891a13b5d57ab337065d02dd6b13a83eed179d-5614297-images-thumbs&n=13  ') no-repeat center center/cover;
             color: white;
             border-radius: 10px;
             margin-bottom: 40px;
@@ -194,8 +194,8 @@
 
     <script type="module">
         // --- Firebase Setup ---
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js  ";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js  ";
 
         const firebaseConfig = {
           apiKey: "AIzaSyAC77MgnqA0LGykek0ffVQnXu3rqadDzzo",
@@ -222,9 +222,12 @@
                 ${user.email === 'teevich@mail.ru' ? '<button class="logout-btn" onclick="goToAdmin()">Админ-панель</button>' : ''}
             `;
           } else {
-            // Пользователь НЕ авторизован, перенаправляем на страницу входа
-            console.log("Пользователь не вошёл, перенаправление...");
-            window.location.href = 'auth.html';
+            // Пользователь НЕ авторизован — не перенаправляем, просто показываем сообщение
+            const authStatusDiv = document.getElementById('auth-status');
+            authStatusDiv.innerHTML = `
+                <span>Вы не вошли в систему.</span>
+                <a href="auth.html" class="cta-button">Войти</a>
+            `;
           }
         });
 
